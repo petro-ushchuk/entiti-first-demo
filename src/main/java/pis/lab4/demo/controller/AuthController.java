@@ -1,5 +1,6 @@
 package pis.lab4.demo.controller;
 
+import com.google.common.net.HttpHeaders;
 import org.springframework.beans.factory.annotation.Value;
 import pis.lab4.demo.api.AuthApi;
 import pis.lab4.demo.dto.UserDto;
@@ -10,10 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import pis.lab4.demo.util.CookieUtils;
-import pis.lab4.demo.util.JwtTokenTool;
+import pis.lab4.demo.util.JwtProvider;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
 
 @Slf4j
 @RestController
@@ -21,21 +21,17 @@ import java.util.HashMap;
 public class AuthController implements AuthApi {
 
   private final AuthService authService;
-  private final JwtTokenTool jwtTokenTool;
-
-  @Value("${jwt.token.cookie.name}")
-  private String jwtTokenCookieName;
-
-  @Value("${jwt.authentication.cookie.expire-date}")
-  private int jwtCookieExpireDate;
+  private final JwtProvider jwtProvider;
 
   @Override
-  public UserDto signIn(UserDto inUserDto, HttpServletResponse httpServletResponse) {
-    log.info("Singing in user with email {}", inUserDto.getEmail());
+  public ResponseEntity<UserDto> signIn(UserDto inUserDto) {
     UserDto user = authService.signIn(inUserDto);
-    String token = jwtTokenTool.createToken(user.getEmail());
-    CookieUtils.addCookie(httpServletResponse, jwtTokenCookieName, token, jwtCookieExpireDate);
-    return user;
+    return ResponseEntity.ok()
+            .header(
+                    HttpHeaders.AUTHORIZATION,
+                    jwtProvider.createToken(user.getEmail())
+            )
+            .body(user);
   }
 
   @Override

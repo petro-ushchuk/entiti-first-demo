@@ -26,7 +26,7 @@ public interface AuthApi {
   @ApiResponse(code = 200, message = "OK", response = UserDto.class)
   @PostMapping("/signin")
   @ResponseStatus(HttpStatus.OK)
-  UserDto signIn(@RequestBody @Validated(OnSignIn.class) UserDto userDto, HttpServletResponse response);
+  ResponseEntity<UserDto> signIn(@RequestBody @Validated(OnSignIn.class) UserDto userDto);
 
   @ApiOperation("Sign up and automatically sign in user to the system")
   @ApiResponse(code = 201, message = "Created", response = UserDto.class)
