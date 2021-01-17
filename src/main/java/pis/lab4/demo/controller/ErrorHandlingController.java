@@ -34,7 +34,7 @@ public class ErrorHandlingController {
 
   @ExceptionHandler(NotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  public Error handleAbstractNotFoundException(EmptyResultDataAccessException ex, HandlerMethod hm) {
+  public Error handleAbstractNotFoundException(NotFoundException ex, HandlerMethod hm) {
     log.error("handleAbstractException: exception {}, method {}",
             ex.getMessage(), hm.getMethod().getName());
     return new Error(ex.getMessage(),ErrorCode.NOT_FOUND , ErrorType.PROCESSING_ERROR_TYPE, LocalDateTime.now());

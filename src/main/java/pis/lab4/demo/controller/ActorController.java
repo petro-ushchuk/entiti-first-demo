@@ -27,7 +27,7 @@ public class ActorController implements ActorApi {
     @Override
     public ActorDto getActor(Long id) {
         log.info("getActor: with id {}", id);
-        ActorDto actorDto = getActor(id);;
+        ActorDto actorDto = actorService.getActor(id);;
         return actorDto;
     }
 
