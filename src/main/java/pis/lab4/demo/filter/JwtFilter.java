@@ -2,6 +2,7 @@ package pis.lab4.demo.filter;
 
 import com.google.common.net.HttpHeaders;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,18 +19,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//@Component
-//@RequiredArgsConstructor
+@Component
+@RequiredArgsConstructor
 public class JwtFilter {
-
-//    private final JwtProvider jwtTokenUtil;
-//    private final AuthService authService;
-
-    //@Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain chain)
-            throws ServletException, IOException {
+//
+//    @Autowired
+//    private AuthService authService;
+//
+//    @Override
+//    protected void doFilterInternal(HttpServletRequest request,
+//                                    HttpServletResponse response,
+//                                    FilterChain chain)
+//            throws ServletException, IOException {
 //        // Get authorization header and validate
 //        final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
 //        if (header.isEmpty() || !header.startsWith("Bearer ")) {
@@ -39,6 +40,7 @@ public class JwtFilter {
 //
 //        // Get jwt token and validate
 //        final String token = header.split(" ")[1].trim();
+//        JwtProvider jwtTokenUtil = authService.ge
 //        if (!jwtTokenUtil.validateToken(token)) {
 //            chain.doFilter(request, response);
 //            return;
@@ -59,6 +61,6 @@ public class JwtFilter {
 //
 //        SecurityContextHolder.getContext().setAuthentication(authentication);
 //        chain.doFilter(request, response);
-    }
+//    }
 
 }

@@ -6,9 +6,9 @@ import pis.lab4.demo.model.enums.Role;
 
 public interface AuthService extends UserDetailsService {
 
-  UserDto signIn(UserDto userDto);
+  String signIn(UserDto userDto);
 
-  UserDto signUp(UserDto userDto, Role role);
+  String signUp(UserDto userDto, Role role);
 
   void signOut();
 

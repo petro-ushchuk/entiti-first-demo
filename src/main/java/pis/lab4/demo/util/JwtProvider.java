@@ -16,10 +16,8 @@ import java.util.HashMap;
 import java.util.function.Function;
 
 @Slf4j
-@Profile("security")
 @Data
-@Service
-@NoArgsConstructor
+@Component
 public class JwtProvider {
 
     @Value("${jwt.key}")

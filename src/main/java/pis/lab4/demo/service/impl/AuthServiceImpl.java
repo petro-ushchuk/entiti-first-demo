@@ -16,6 +16,7 @@ import  pis.lab4.demo.model.enums.Role;
 import  pis.lab4.demo.repository.UserRepository;
 import  pis.lab4.demo.service.AuthService;
 import  pis.lab4.demo.service.MappingService;
+import pis.lab4.demo.util.JwtProvider;
 
 @Slf4j
 @Service
@@ -26,6 +27,7 @@ public class AuthServiceImpl implements AuthService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
   private final AuthenticationManager authenticationManager;
+  private final JwtProvider jwt;
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -34,20 +36,19 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
-  public UserDto signIn(UserDto userDto) {
+  public String signIn(UserDto userDto) {
     Authentication authentication = authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
             userDto.getEmail(),
             userDto.getPassword())
     );
     SecurityContextHolder.getContext().setAuthentication(authentication);
-
     User user = (User) authentication.getPrincipal();
-    return mappingService.mapUserToUserDto(user);
+    return jwt.createToken(user.getEmail());
   }
 
   @Override
-  public UserDto signUp(UserDto userDto, Role role) {
+  public String signUp(UserDto userDto, Role role) {
     User user = mappingService.mapUserDtoToUser(userDto);
     log.info("createUser: about to register a new user with email {}", user.getEmail());
 

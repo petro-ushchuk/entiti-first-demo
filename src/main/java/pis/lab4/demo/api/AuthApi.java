@@ -12,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-
 @Api(tags = "Auth management REST API")
 @ApiResponses({
     @ApiResponse(code = 404, message = "Not found"),
@@ -26,13 +24,13 @@ public interface AuthApi {
   @ApiResponse(code = 200, message = "OK", response = UserDto.class)
   @PostMapping("/signin")
   @ResponseStatus(HttpStatus.OK)
-  ResponseEntity<UserDto> signIn(@RequestBody @Validated(OnSignIn.class) UserDto userDto);
+  String signIn(@RequestBody @Validated(OnSignIn.class) UserDto userDto);
 
   @ApiOperation("Sign up and automatically sign in user to the system")
   @ApiResponse(code = 201, message = "Created", response = UserDto.class)
   @PostMapping("/signup")
   @ResponseStatus(HttpStatus.CREATED)
-  UserDto signUp(@RequestBody @Validated(OnRegister.class) UserDto userDto);
+  String signUp(@RequestBody @Validated(OnRegister.class) UserDto userDto);
 
   @ApiOperation("Sign out current user from the system")
   @ApiResponse(code = 204, message = "No content")
